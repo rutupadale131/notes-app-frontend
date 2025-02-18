@@ -43,7 +43,7 @@ button.logout:hover {
     right: 60px;      
     width: 50px;      
     height: 50px;     
-    font-size: 24px;  
+    font-size: 26px;  
     border-radius: 50%; 
     background-color: #6a0dad; 
     color: white;
@@ -52,6 +52,13 @@ button.logout:hover {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
     transition: all 0.3s ease;
     z-index:100;
+
+    -webkit-appearance: none;
+    appearance: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .create-button:hover {
@@ -115,9 +122,9 @@ button.logout:hover {
     z-index: 80;
 }
 
-@media (max-width:600px){
+@media (max-width:748px){
     .notes-list{
-        padding: 20px;
+        padding: 65px;
     }
     .dashboard-container{
         padding:0px 20px;

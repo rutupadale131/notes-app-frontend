@@ -49,28 +49,28 @@ class Dashboard extends Component{
             Authorization: `Bearer ${jwt}`
             }
         }
-    const response=await fetch(url,options)
-    const data=await response.json()
-    console.log(response)
-    if(response.status===401){
-        Cookies.remove("jwt_token")
-        this.props.navigate("/login", { replace: true });
-            return;
-    }
-    if(response.ok){
-        let displayWelcomeView=true;
-        if(data.length>0){
-            displayWelcomeView=false
+        const response=await fetch(url,options)
+        const data=await response.json()
+        console.log(response)
+        if(response.status===401){
+            Cookies.remove("jwt_token")
+            this.props.navigate("/login", { replace: true });
+                return;
         }
-    this.setState({
-        notesList:[...data],
-        apiStatus:apiStatusConstants.success,
-        hasSavedNotes:displayWelcomeView
-    })
-    return;
-    }else{
-        this.setState({apiStatus:apiStatusConstants.failure})
-    }
+        if(response.ok){
+            let displayWelcomeView=true;
+            if(data.length>0){
+                displayWelcomeView=false
+            }
+        this.setState({
+            notesList:[...data],
+            apiStatus:apiStatusConstants.success,
+            hasSavedNotes:displayWelcomeView
+        })
+        return;
+        }else{
+            this.setState({apiStatus:apiStatusConstants.failure})
+        }
 }
 
    renderLoadingView=()=>{
@@ -149,6 +149,10 @@ class Dashboard extends Component{
         )   
         )
 
+        const sortedNotesList=renderNotesList.sort((a,b)=>
+        a.title.toLocaleLowerCase().localeCompare(b.title.toLocaleLowerCase())
+        );
+
         return (
             <div className="dashboard-container">
                 <div className="search-bg">
@@ -168,7 +172,7 @@ class Dashboard extends Component{
                 variants={listVariants}
                 className="notes-list"
             >
-                {renderNotesList.map(eachNote => (
+                {sortedNotesList.map(eachNote => (
                 <motion.li 
                     key={eachNote.id} 
                     variants={itemVariants} 
@@ -227,6 +231,8 @@ function DashboardWrapper(){
     const {state}=useLocation();
     const noteDeleted=state?.noteDeleted
     const username=state?.username
+    const noteAdded=state?.noteAdded
+
     useEffect(() => {
         if (noteDeleted) {
             Swal.fire({
@@ -248,12 +254,20 @@ function DashboardWrapper(){
                 }
             )
         }
-        if (noteDeleted || username!==undefined) {
+        if (noteAdded) {
+            Swal.fire({
+                icon: "success",
+                title: "Note added successfully!",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+        }
+        if (noteDeleted || username!==undefined||noteAdded) {
             setTimeout(() => {
                 navigate(".", { replace: true, state: {} });
             }, 0);
         }
-    }, [noteDeleted,username,navigate]);
+    }, [noteDeleted,username,noteAdded,navigate]);
 
 
     return <Dashboard navigate={navigate}/>

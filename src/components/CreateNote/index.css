@@ -113,6 +113,11 @@
 }
 
 @media (max-width:748px){
+    .create-note-bg{
+       width: 100vw;
+       min-height: 100vh;
+    }
+
     .back-button-container{
         background-color: #121212;
         padding-bottom:20px ;

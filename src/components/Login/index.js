@@ -81,7 +81,8 @@ class Login extends Component{
                 animate={{opacity:1,scale:1}}
                 transition={{duration:0.8,ease:"easeOut"}}
                 >
-                    Sign In
+                RuScribe  <br/>
+                <span style={{fontSize:"18px"}}>Sign in to access your personalized <br/>notes  and stay organized!</span>
                 </motion.h1>
                 <motion.form 
                 className="login-form" 

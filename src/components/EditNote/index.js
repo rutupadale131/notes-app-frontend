@@ -1,7 +1,7 @@
-import React, { Component,useEffect } from 'react';
+import React, { Component } from 'react';
 import Cookies from 'js-cookie';
 import { motion } from 'motion/react';
-import { useParams, useNavigate,useLocation }  from 'react-router-dom';
+import { useParams, useNavigate}  from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -130,7 +130,7 @@ class EditNote extends Component {
             body: JSON.stringify({ title: this.state.title, content: this.state.note })
         };
 
-         Swal.fire({
+         const result=await Swal.fire({
                     title: "Are you sure?",
                     text: "Note will be permanently deleted!",
                     icon: "warning",
@@ -138,8 +138,7 @@ class EditNote extends Component {
                     confirmButtonText: "Yes, delete note!",
                     cancelButtonText: "Cancel"
                 })
-            .then(async(result) => {
-                if (result.isConfirmed) {
+        if (result.isConfirmed) {
                     const response=await fetch(url,options)
                     const data=await response.json()
                     console.log(data)
@@ -153,7 +152,7 @@ class EditNote extends Component {
                         this.props.navigate("/",{replace:true,state:{noteDeleted:true}})
                     }
                                 }
-                            });
+                        
 
         
     }
@@ -212,7 +211,7 @@ class EditNote extends Component {
                 value={title}
                 onChange={this.handleChangeTitle}
                 className='input-title'
-                placeholder='Title'
+                placeholder='Enter Title'
                 />
                 <TextareaAutosize
                 minRows={20}
@@ -269,21 +268,7 @@ class EditNote extends Component {
 function EditNoteWrapper(){
     const {id}=useParams()
     const navigate=useNavigate()
-    const {state}=useLocation();
-    const noteAdded=state?.noteAdded
-    useEffect(() => {
-        if (noteAdded) {
-            Swal.fire({
-                icon: "success",
-                title: "Note added successfully!",
-                timer: 2000,
-                showConfirmButton: false,
-            });
-        }
-        setTimeout(() => {
-            navigate(".", { replace: true, state: {} });
-        }, 0)
-    }, [noteAdded,navigate]);
+    
     return <EditNote id={id} navigate={navigate} />
 }
 

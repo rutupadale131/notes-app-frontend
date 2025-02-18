@@ -94,7 +94,7 @@ class CreateNote extends Component {
             const data = await response.json();
             console.log('Note added successfully:', data);
             this.setState({apiStatus:apiStatusConstants.success})
-            this.props.navigate(`/editnote/${data.id}`,{replace:true,state:{noteAdded:true}})
+            this.props.navigate("/",{replace:true,state:{noteAdded:true}})
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
         }

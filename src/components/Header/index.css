@@ -18,6 +18,7 @@
 @media (max-width:748px) {
     .navbar{
         padding: 10px 20px;
+        width: 100vw;
     }
 }
 
